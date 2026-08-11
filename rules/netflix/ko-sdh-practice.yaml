@@ -28,6 +28,10 @@ songs:
   forbidden_punctuation: []
   lyrics_with_dialogue_in_one_event: allowed
 
+numbers:
+  # 6만~8만 명 (o) / 6~8만 명 (x) / 6만 ~ 8만 명 (x)
+  range_notation_strict: true
+
 credit:
   translator_credit: forbidden
 
@@ -44,6 +48,7 @@ korean:
   dialect: keep
 
 text:
+  no_comma_after_conjunctive_adverb: true   # 그러나, 또한, 사실, 뒤 쉼표 금지
   ellipsis_char: "…"                # 넷플릭스는 전각 기호
   double_punctuation: limited       # ?! 는 되지만 남용 금지
   tilde: limited                    # 오~ 정도만, 남용 금지
@@ -104,6 +109,16 @@ rules:
     check: bleep_mask_character
     auto: false
     message: "삐 처리는 별표(*)로 합니다."
+  - id: S33
+    clause: "실무 자료 / 범위 표기"
+    check: range_notation
+    auto: false
+    message: "범위는 양쪽에 단위를 붙이고 부호 앞뒤를 띄우지 않습니다."
+  - id: S34
+    clause: "실무 자료 / 문장부호"
+    check: conjunctive_adverb_comma
+    auto: false
+    message: "접속부사 뒤에는 쉼표를 쓰지 않습니다."
   - id: S32
     clause: "실무 자료 / 크레딧"
     check: translator_credit_present

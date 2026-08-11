@@ -60,6 +60,7 @@ shot_change:
 text:
   # 전각 말줄임표와 온점 셋 중 어느 쪽이든 되지만 **한 작업물 안에서 통일**해야 한다.
   # 발주처가 정해 주는 경우가 많고, 말이 없으면 반드시 물어볼 것.
+  no_comma_after_conjunctive_adverb: true   # 그러나, 또한, 사실, 뒤 쉼표 금지
   ellipsis_char: null                # 전각·점 셋 둘 다 되지만 작업물 내 통일
   ellipsis_consistency_required: true
   double_punctuation: forbidden
@@ -70,6 +71,10 @@ text:
 songs:
   lyrics_with_dialogue_in_one_event: forbidden   # 가사와 대사를 한 셀에 넣지 않는다
   forbidden_punctuation: []                      # 가사에 쉼표를 써도 된다
+
+numbers:
+  # 6만~8만 명 (o) / 6~8만 명 (x) / 6만 ~ 8만 명 (x)
+  range_notation_strict: true
 
 credit:
   translator_credit: forbidden
@@ -105,6 +110,16 @@ rules:
     check: gap_too_short
     auto: false
     message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: DP20
+    clause: "실무 자료 / 범위 표기"
+    check: range_notation
+    auto: false
+    message: "범위는 양쪽에 단위를 붙이고 부호 앞뒤를 띄우지 않습니다."
+  - id: DP21
+    clause: "실무 자료 / 문장부호"
+    check: conjunctive_adverb_comma
+    auto: false
+    message: "접속부사 뒤에는 쉼표를 쓰지 않습니다."
   - id: DP18
     clause: "실무 기준 / 노래"
     check: lyrics_with_dialogue
