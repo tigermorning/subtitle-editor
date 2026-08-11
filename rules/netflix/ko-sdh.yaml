@@ -35,6 +35,11 @@ text:
   italics: forbidden
   ellipsis_char: "…"
 
+tone:
+  # 어조는 화자명과 **같은 대괄호 안에** 슬래시로 이어 붙인다: [철수/작게]
+  enclosure: "[]"
+  form: slash_inside_speaker
+
 speaker_id:
   enclosure: "[]"
   use_when: not_visually_identifiable

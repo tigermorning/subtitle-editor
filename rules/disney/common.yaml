@@ -32,6 +32,11 @@ limits:
     max: 7000
   min_gap_frames: 2
 
+tone:
+  # 디즈니는 서술형으로 한 괄호 안에 쓴다: [철수가 작게]
+  enclosure: "[]"
+  form: descriptive_inside_speaker
+
 speaker_id:
   enclosure: "[]"
   style: "[이름이 작게] / [이름이 영어로]"   # 넷플릭스는 슬래시로 나눈다
