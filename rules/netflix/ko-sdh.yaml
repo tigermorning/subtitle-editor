@@ -154,6 +154,11 @@ rules:
     check: speaker_id_inconsistent
     auto: false
     message: "같은 인물의 화자 표시가 일관되지 않습니다(전개상 의도적 변경은 예외)."
+  - id: S15
+    clause: "Section I.4 Continuity (한국어 공통)"
+    check: three_dot_ellipsis
+    auto: true
+    message: "점 3개가 아니라 U+2026(…) 한 글자를 씁니다."
   - id: S14
     clause: "Section I.10 Italics (한국어 공통)"
     check: italics_present
