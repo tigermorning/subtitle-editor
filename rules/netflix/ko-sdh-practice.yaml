@@ -15,6 +15,15 @@ source:
 # 공식 문서에 없거나 명시되지 않았지만 납품 현장에서 지키는 것들이라 출처를 갈라 둔다.
 # 공식 값만 쓰고 싶으면 ko-sdh.yaml을 쓰면 된다.
 
+limits:
+  # 넷플릭스 공식 General Requirements는 프레임 갭 규정을 삭제했다(2020-07-24
+  # "Timing and frame gap sections removed"). 그러나 실무에서는 2프레임을 지킨다.
+  # 공식 판(ko-sdh.yaml)에는 넣지 않고 이 실무 판에만 둔다.
+  min_gap_frames: 2
+
+top_position:
+  applied: true
+
 sound_effect:
   discouraged_expressions: ["[정적]", "[조용해진다]", "[조용하다]"]
   onomatopoeia_form: "[의성어 - 출처]"      # 예: [직 - 지퍼], [달칵 - 문]
@@ -51,6 +60,11 @@ rules:
     check: ampersand_outside_initialism
     auto: false
     message: "'&'는 및·겸·쉼표로 바꿉니다."
+  - id: S23
+    clause: "실무 스펙 / 자막 간격"
+    check: gap_too_short
+    auto: false
+    message: "자막 사이를 2프레임 이상 벌립니다."
   - id: S22
     clause: "실무 자료 / 인명 표기"
     check: middle_initial_period

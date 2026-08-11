@@ -14,12 +14,24 @@ source:
 # 이 프로파일은 **작업자가 실제 납품하며 정리한 기준**이다. 공식 문서가 아니므로
 # source.client로 출처를 밝힌다.
 #
-# ⚠️ 글자 수·읽기 속도 값은 아직 비어 있다. 원본 자료의 [스펙] 표가 이미지라
-# 텍스트로 추출되지 않았다. 값을 받으면 limits에 채운다. 그때까지 길이·속도 검사는
-# 돌지 않는다(규칙에 넣지 않았으므로 조용히 통과하지 않고 아예 검사 대상이 아니다).
+# 수치는 자료의 [스펙] 표(문서 안 이미지)에서 읽었다. 넷플릭스·디즈니와 다른 곳:
+# 듀레이션 상한이 6초이고, 불가피할 때 CPL 20자·3줄까지 열어 둔다.
 
 limits:
-  max_lines: 2
+  chars_per_line: 16          # 불가피할 경우 20자까지 (사람이 판단할 예외)
+  chars_per_line_hard: 20
+  char_weights:
+    cjk: 1.0
+    other: 0.5
+  reading_speed_cps:
+    adult: 14
+    children: 11
+  max_lines: 2                # 불가피할 경우 3줄까지
+  max_lines_hard: 3
+  duration_ms:
+    min: 834
+    max: 6000                 # 넷플릭스·디즈니는 7초, 쿠팡만 6초
+  min_gap_frames: 2
 
 speaker_id:
   enclosure: "[]"
@@ -44,7 +56,20 @@ delivery:
   file_format: webvtt
   line_position_percent: 10     # WebVTT 속성 상/중 line 10%
 
+top_position:
+  applied: true               # 화면 텍스트와 겹치면 상단 처리
+
 rules:
+  - id: CP00
+    clause: "실무 스펙 / 듀레이션·글자 수"
+    check: [duration_out_of_range, line_length_exceeded, reading_speed_exceeded]
+    auto: false
+    message: "쿠팡 스펙(0.834~6초, {chars_per_line}자, {cps_adult} CPS)을 벗어납니다."
+  - id: CP08
+    clause: "실무 스펙 / 자막 간격"
+    check: gap_too_short
+    auto: false
+    message: "자막 사이를 2프레임 이상 벌립니다."
   - id: CP01
     clause: "실무 기준 / 효과음"
     check: effect_after_dialogue

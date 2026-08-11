@@ -13,11 +13,21 @@ source:
 # 디즈니+의 공식 스타일 가이드는 파트너 전용 비공개 문서다(disney/UNAVAILABLE.yaml).
 # 이 프로파일은 작업자가 실제 납품하며 정리한 기준이다.
 #
-# ⚠️ 글자 수·읽기 속도 값은 비어 있다. 원본 자료의 [스펙] 표가 이미지라 추출되지
-# 않았다. 값을 받으면 채운다.
+# 수치는 자료의 [스펙] 표(문서 안 이미지)에서 읽었다. 넷플릭스와 같다.
 
 limits:
+  chars_per_line: 16
+  char_weights:
+    cjk: 1.0
+    other: 0.5
+  reading_speed_cps:
+    adult: 14
+    children: 11
   max_lines: 2
+  duration_ms:
+    min: 834
+    max: 7000
+  min_gap_frames: 2
 
 speaker_id:
   enclosure: "[]"
@@ -48,7 +58,20 @@ censorship:
   allowed: false
   full_sentence_bleep: "[음 소거 효과음]"
 
+top_position:
+  applied: true
+
 rules:
+  - id: DP00
+    clause: "실무 스펙 / 듀레이션·글자 수"
+    check: [duration_out_of_range, line_length_exceeded, reading_speed_exceeded]
+    auto: false
+    message: "디즈니 스펙(0.834~7초, {chars_per_line}자, {cps_adult} CPS)을 벗어납니다."
+  - id: DP07
+    clause: "실무 스펙 / 자막 간격"
+    check: gap_too_short
+    auto: false
+    message: "자막 사이를 2프레임 이상 벌립니다."
   - id: DP01
     clause: "실무 기준 / 화자명·효과음 표기"
     check: speaker_effect_no_space
