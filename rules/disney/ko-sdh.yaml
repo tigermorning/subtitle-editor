@@ -31,6 +31,9 @@ limits:
 
 speaker_id:
   enclosure: "[]"
+  style: "[이름이 작게] / [이름이 영어로]"   # 넷플릭스는 슬래시로 나눈다
+  name_from_start_for_leads: true            # 주인공은 처음부터 이름, 단역은 밝혀진 뒤
+  foreign_return_marker: true                # 한국어로 돌아오면 [한국어] 표시
   numbering_reset: scene          # 씬이 바뀌면 초기화(넷플릭스와 같다)
   in_point_basis: shot_change     # 장면 전환 기준(얼굴이 보이면 화자명 불필요)
   space_between_markers: true
@@ -98,6 +101,21 @@ rules:
     check: gap_too_short
     auto: false
     message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: DP15
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_enclosure
+    auto: false
+    message: "화자명은 대괄호로 씁니다."
+  - id: DP16
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_conjunction
+    auto: false
+    message: "동시 발화는 쉼표로 나열하거나 [함께]로 씁니다."
+  - id: DP17
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_alone_on_line
+    auto: false
+    message: "화자명과 대사 첫마디는 같은 줄에 둡니다."
   - id: DP12
     clause: "실무 기준 / 배경음악"
     check: music_marker_style

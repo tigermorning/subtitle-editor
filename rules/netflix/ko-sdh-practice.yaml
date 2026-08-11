@@ -50,6 +50,11 @@ sound_effect:
   omit_when_visible: true                  # 화면에 동작이 보이면 효과음 생략
 
 speaker_id:
+  enclosure: "[]"
+  style: "[이름/어조/언어]"              # 디즈니는 서술형, 쿠팡은 소괄호
+  prefer_role_over_gender: true         # [남자]·[여자]보다 [경비]·[종업원]
+  foreign_return_marker: false          # 한국어로 돌아와도 [한국어]를 넣지 않는다
+  transliteration_quotes: false         # 외국어 음차에 따옴표를 쓰지 않는다
   numbering_reset: scene                   # 씬이 바뀌면 화자 번호 초기화
   insert_on_first_line_of_speaker: true    # 화자의 첫 셀에만, 시공간 바뀌면 다시
   space_between_markers: true              # [화자명] [효과음] 사이 한 칸
@@ -92,6 +97,21 @@ rules:
     check: bleep_mask_character
     auto: false
     message: "삐 처리는 별표(*)로 합니다."
+  - id: S29
+    clause: "실무 자료 / 화자명"
+    check: speaker_id_enclosure
+    auto: false
+    message: "화자명은 대괄호로 씁니다."
+  - id: S30
+    clause: "실무 자료 / 화자명"
+    check: speaker_id_conjunction
+    auto: false
+    message: "동시 발화는 쉼표로 나열하거나 [함께]로 씁니다."
+  - id: S31
+    clause: "실무 자료 / 화자명"
+    check: speaker_id_alone_on_line
+    auto: false
+    message: "화자명과 대사 첫마디는 같은 줄에 둡니다."
   - id: S26
     clause: "실무 자료 / 배경음악"
     check: music_marker_style

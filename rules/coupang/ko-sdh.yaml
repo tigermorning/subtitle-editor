@@ -34,7 +34,11 @@ limits:
   min_gap_frames: 2
 
 speaker_id:
-  enclosure: "[]"
+  # 넷플릭스·디즈니는 대괄호, **쿠팡은 소괄호**로 화자명을 쓴다.
+  # 효과음은 셋 다 대괄호다: (철수) [작게], (철수) [영어]
+  enclosure: "()"
+  style: "(이름) [어조] [언어]"
+  foreign_return_marker: true          # 한국어로 돌아오면 [한국어] 표시
   numbering_reset: episode      # 넷플릭스·디즈니와 다르다 — 에피소드 내내 번호 유지
   in_point_basis: dialogue_start  # 대사 시작 기준(얼굴이 안 보이면 화자명 삽입)
   space_between_markers: true
@@ -106,6 +110,21 @@ rules:
     check: bleep_mask_character
     auto: false
     message: "삐 처리는 별표(*)로 합니다."
+  - id: CP16
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_enclosure
+    auto: false
+    message: "쿠팡은 화자명을 소괄호로 씁니다."
+  - id: CP17
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_conjunction
+    auto: false
+    message: "동시 발화는 쉼표로 나열하거나 [함께]로 씁니다."
+  - id: CP18
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_alone_on_line
+    auto: false
+    message: "화자명과 대사 첫마디는 같은 줄에 둡니다."
   - id: CP13
     clause: "실무 기준 / 배경음악"
     check: music_marker_style
