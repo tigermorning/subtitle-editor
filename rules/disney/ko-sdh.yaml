@@ -69,6 +69,10 @@ text:
 
 songs:
   lyrics_with_dialogue_in_one_event: forbidden   # 가사와 대사를 한 셀에 넣지 않는다
+  forbidden_punctuation: []                      # 가사에 쉼표를 써도 된다
+
+credit:
+  translator_credit: forbidden
 
 censorship:
   allowed: false
@@ -101,6 +105,16 @@ rules:
     check: gap_too_short
     auto: false
     message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: DP18
+    clause: "실무 기준 / 노래"
+    check: lyrics_with_dialogue
+    auto: false
+    message: "가사와 대사를 한 자막에 넣지 않습니다."
+  - id: DP19
+    clause: "실무 기준 / 크레딧"
+    check: translator_credit_present
+    auto: false
+    message: "디즈니는 자막 제작자 크레딧을 넣지 않습니다."
   - id: DP15
     clause: "실무 기준 / 화자명"
     check: speaker_id_enclosure

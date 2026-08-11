@@ -66,7 +66,18 @@ korean:
   orthography: standard             # 표준어와 비슷하면 표준어로(`네가`·`그렇지`)
   dialect: keep
 
+songs:
+  # 넷플릭스·디즈니는 가사에 쉼표를 허용하지만 쿠팡은 금지한다.
+  # 내 피, 땀, 눈물 (x) -> 내 피 땀 눈물 (o)
+  forbidden_punctuation: [",", "'", '"', "”", "“"]
+  lyrics_with_dialogue_in_one_event: allowed
+
+credit:
+  translator_credit: required        # 자막: 홍길동
+  credit_duration_ms: 2000
+
 delivery:
+  first_cue_not_at_zero: true        # 첫 셀 인점 00:00:00:00 불가
   file_format: webvtt
   line_position_percent: 10     # WebVTT 속성 상/중 line 10%
 
@@ -110,6 +121,16 @@ rules:
     check: bleep_mask_character
     auto: false
     message: "삐 처리는 별표(*)로 합니다."
+  - id: CP19
+    clause: "실무 기준 / 노래"
+    check: lyrics_punctuation
+    auto: false
+    message: "쿠팡은 가사에 쉼표·따옴표를 쓰지 않습니다."
+  - id: CP20
+    clause: "실무 기준 / 납품"
+    check: first_event_at_zero
+    auto: false
+    message: "첫 자막 인점을 00:00:00:00으로 두지 않습니다."
   - id: CP16
     clause: "실무 기준 / 화자명"
     check: speaker_id_enclosure

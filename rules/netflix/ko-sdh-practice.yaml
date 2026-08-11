@@ -24,6 +24,13 @@ limits:
 top_position:
   applied: true
 
+songs:
+  forbidden_punctuation: []
+  lyrics_with_dialogue_in_one_event: allowed
+
+credit:
+  translator_credit: forbidden
+
 censorship:
   allowed: false
   bleeped_word: "*"
@@ -97,6 +104,11 @@ rules:
     check: bleep_mask_character
     auto: false
     message: "삐 처리는 별표(*)로 합니다."
+  - id: S32
+    clause: "실무 자료 / 크레딧"
+    check: translator_credit_present
+    auto: false
+    message: "넷플릭스는 자막 제작자 크레딧을 넣지 않습니다."
   - id: S29
     clause: "실무 자료 / 화자명"
     check: speaker_id_enclosure
