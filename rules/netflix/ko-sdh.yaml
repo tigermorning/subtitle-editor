@@ -181,5 +181,5 @@ rules:
   - id: S17
     clause: "Korean TTSG II / Punctuation"
     check: forbidden_punctuation
-    auto: true
-    message: "이 작업에서 쓰지 않는 문장부호입니다. 화자 표시에서 새어 나온 콜론은 자동으로 뗍니다."
+    auto: false
+    message: "이 작업에서 쓰지 않는 문장부호입니다."

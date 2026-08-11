@@ -72,3 +72,8 @@ rules:
     check: position_collides_with_forced_narrative
     auto: true
     message: "화면 글자와 겹칩니다. 말자막을 상단 중앙으로 올립니다(겹침이 끝나면 되돌립니다)."
+  - id: C11
+    clause: "작업 표기 / 화자명"
+    check: colon_speaker_prefix
+    auto: true
+    message: "대본의 `이름:` 표기는 자막 표기가 아닙니다. `[이름]`으로 옮깁니다."
