@@ -24,6 +24,12 @@ limits:
 top_position:
   applied: true
 
+text:
+  ellipsis_char: "…"                # 넷플릭스는 전각 기호
+  double_punctuation: limited       # ?! 는 되지만 남용 금지
+  tilde: limited                    # 오~ 정도만, 남용 금지
+  line_break_single_if_under: 16    # 16자 이하는 한 줄로
+
 sound_effect:
   discouraged_expressions: ["[정적]", "[조용해진다]", "[조용하다]"]
   onomatopoeia_form: "[의성어 - 출처]"      # 예: [직 - 지퍼], [달칵 - 문]
@@ -60,6 +66,16 @@ rules:
     check: ampersand_outside_initialism
     auto: false
     message: "'&'는 및·겸·쉼표로 바꿉니다."
+  - id: S24
+    clause: "실무 자료 / 문장부호"
+    check: ellipsis_style_mismatch
+    auto: true
+    message: "넷플릭스는 전각 말줄임표(…)를 씁니다."
+  - id: S25
+    clause: "실무 자료 / 효과음"
+    check: sound_effect_multiline
+    auto: false
+    message: "효과음은 한 줄로 씁니다."
   - id: S23
     clause: "실무 스펙 / 자막 간격"
     check: gap_too_short

@@ -48,8 +48,12 @@ shot_change:
 text:
   # 전각 말줄임표와 온점 셋 중 어느 쪽이든 되지만 **한 작업물 안에서 통일**해야 한다.
   # 발주처가 정해 주는 경우가 많고, 말이 없으면 반드시 물어볼 것.
-  ellipsis_char: null
+  ellipsis_char: null                # 전각·점 셋 둘 다 되지만 작업물 내 통일
   ellipsis_consistency_required: true
+  double_punctuation: forbidden
+  tilde: forbidden
+  italics: forbidden
+  line_break: "적당히 보기 좋게"
 
 songs:
   lyrics_with_dialogue_in_one_event: forbidden   # 가사와 대사를 한 셀에 넣지 않는다
@@ -72,6 +76,26 @@ rules:
     check: gap_too_short
     auto: false
     message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: DP08
+    clause: "실무 기준 / 문장부호"
+    check: ellipsis_style_inconsistent
+    auto: false
+    message: "말줄임표 표기가 섞였습니다. 작업물 안에서 통일합니다."
+  - id: DP09
+    clause: "실무 기준 / 문장부호"
+    check: double_punctuation
+    auto: false
+    message: "이중 부호를 쓰지 않습니다."
+  - id: DP10
+    clause: "실무 기준 / 문장부호"
+    check: tilde_used
+    auto: false
+    message: "물결표를 쓰지 않습니다."
+  - id: DP11
+    clause: "실무 기준 / 효과음"
+    check: sound_effect_multiline
+    auto: false
+    message: "효과음은 한 줄로 씁니다."
   - id: DP01
     clause: "실무 기준 / 화자명·효과음 표기"
     check: speaker_effect_no_space
