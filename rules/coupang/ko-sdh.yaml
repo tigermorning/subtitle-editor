@@ -87,11 +87,6 @@ rules:
     check: effect_after_dialogue
     auto: false
     message: "쿠팡은 대사 뒤 효과음을 허용하지 않습니다. 자막을 나누세요."
-  - id: CP02
-    clause: "실무 기준 / 화자명·효과음 표기"
-    check: speaker_effect_no_space
-    auto: false
-    message: "표시와 표시 사이를 한 칸 띄웁니다."
   - id: CP03
     clause: "실무 기준 / 효과음"
     check: discouraged_silence_expression

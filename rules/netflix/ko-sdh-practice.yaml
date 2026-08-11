@@ -69,7 +69,7 @@ speaker_id:
   transliteration_quotes: false         # 외국어 음차에 따옴표를 쓰지 않는다
   numbering_reset: scene                   # 씬이 바뀌면 화자 번호 초기화
   insert_on_first_line_of_speaker: true    # 화자의 첫 셀에만, 시공간 바뀌면 다시
-  space_between_markers: true              # [화자명] [효과음] 사이 한 칸
+  space_between_markers: false              # [화자명][효과음] — 표시끼리는 붙인다
 
 forced_narrative:
   # 서사와 관련 있고 외국어면 번역해 화면 자막으로 잡는다.
@@ -86,9 +86,9 @@ shot_change:
 rules:
   - id: S18
     clause: "실무 자료 / 화자명·효과음 표기"
-    check: speaker_effect_no_space
-    auto: false
-    message: "표시와 표시 사이를 한 칸 띄웁니다."
+    check: space_between_markers
+    auto: true
+    message: "표시끼리는 붙여 씁니다. 한 칸은 마지막 표시와 대사 사이에만 둡니다."
   - id: S19
     clause: "실무 자료 / 효과음"
     check: discouraged_silence_expression

@@ -72,11 +72,6 @@ rules:
     check: sound_effect_multiline
     auto: false
     message: "효과음은 한 줄로 씁니다."
-  - id: DP01
-    clause: "실무 기준 / 화자명·효과음 표기"
-    check: speaker_effect_no_space
-    auto: false
-    message: "표시와 표시 사이를 한 칸 띄웁니다."
   - id: DP02
     clause: "실무 기준 / 효과음"
     check: discouraged_silence_expression

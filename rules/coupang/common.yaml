@@ -50,7 +50,7 @@ speaker_id:
   foreign_return_marker: true          # 한국어로 돌아오면 [한국어] 표시
   numbering_reset: episode      # 넷플릭스·디즈니와 다르다 — 에피소드 내내 번호 유지
   in_point_basis: dialogue_start  # 대사 시작 기준(얼굴이 안 보이면 화자명 삽입)
-  space_between_markers: true
+  space_between_markers: false
 
 shot_change:
   applied: false                # 쿠팡은 장면 전환을 적용하지 않는다
@@ -178,3 +178,8 @@ rules:
     check: colon_speaker_prefix
     auto: true
     message: "대본의 `이름:` 표기는 자막 표기가 아닙니다. `(이름)`으로 옮깁니다."
+  - id: CC02
+    clause: "작업 표기 / 표시 띄어쓰기"
+    check: space_between_markers
+    auto: true
+    message: "표시끼리는 붙여 씁니다. 한 칸은 마지막 표시와 대사 사이에만 둡니다."
