@@ -168,3 +168,8 @@ rules:
     check: formality_inconsistent
     auto: false
     message: "같은 관계에서 존댓말·반말이 섞였습니다."
+  - id: T18
+    clause: "General Requirements / Line Treatment (권고)"
+    check: line_break_top_heavy
+    auto: false
+    message: "아래 줄이 더 긴 형태를 권합니다(위반은 아닙니다)."

@@ -162,8 +162,18 @@ rules:
     check: three_dot_ellipsis
     auto: true
     message: "점 3개가 아니라 U+2026(…) 한 글자를 씁니다."
+  - id: S16
+    clause: "General Requirements / Line Treatment"
+    check: line_break_position
+    auto: false
+    message: "줄바꿈이 문법 단위를 끊거나 역피라미드 형태가 아닙니다."
   - id: S14
     clause: "Section I.10 Italics (한국어 공통)"
     check: italics_present
     auto: true
     message: "한국어 자막에는 이탤릭을 쓰지 않습니다."
+  - id: S17
+    clause: "General Requirements / Line Treatment (권고)"
+    check: line_break_top_heavy
+    auto: false
+    message: "아래 줄이 더 긴 형태를 권합니다(위반은 아닙니다)."
