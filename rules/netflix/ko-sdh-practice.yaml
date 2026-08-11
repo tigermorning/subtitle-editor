@@ -24,6 +24,18 @@ limits:
 top_position:
   applied: true
 
+censorship:
+  allowed: false
+  bleeped_word: "*"
+  full_sentence_bleep: "asterisks"   # 별표를 늘어놓는다. [음 소거 효과음]은 쓰지 않는다
+
+music:
+  note_inside_bracket: false
+
+korean:
+  orthography: standard
+  dialect: keep
+
 text:
   ellipsis_char: "…"                # 넷플릭스는 전각 기호
   double_punctuation: limited       # ?! 는 되지만 남용 금지
@@ -66,6 +78,21 @@ rules:
     check: ampersand_outside_initialism
     auto: false
     message: "'&'는 및·겸·쉼표로 바꿉니다."
+  - id: S28
+    clause: "실무 기준 / 음 소거"
+    check: bleep_mask_character
+    auto: false
+    message: "삐 처리는 별표(*)로 합니다."
+  - id: S26
+    clause: "실무 자료 / 배경음악"
+    check: music_marker_style
+    auto: false
+    message: "음악 효과음 대괄호 안에 ♪를 넣지 않습니다."
+  - id: S27
+    clause: "실무 자료 / 음 소거"
+    check: full_bleep_style
+    auto: false
+    message: "넷플릭스는 여러 단어 삐 처리에 [음 소거 효과음]을 쓰지 않습니다."
   - id: S24
     clause: "실무 자료 / 문장부호"
     check: ellipsis_style_mismatch

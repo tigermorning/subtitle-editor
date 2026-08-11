@@ -50,7 +50,17 @@ shot_change:
 
 censorship:
   allowed: false
-  full_sentence_bleep: "[음 소거 효과음]"   # 넷플릭스는 별표, 쿠팡은 이 표기
+  bleeped_word: "*"
+  full_sentence_bleep: "[음 소거 효과음]"   # 넷플릭스는 별표를 늘어놓는다
+
+music:
+  note_inside_bracket: false        # 음악 효과음에 ♪를 넣지 않는다
+  music_note: "♪"
+  space_between_note_and_text: true
+
+korean:
+  orthography: standard             # 표준어와 비슷하면 표준어로(`네가`·`그렇지`)
+  dialect: keep
 
 delivery:
   file_format: webvtt
@@ -77,6 +87,21 @@ rules:
     check: gap_too_short
     auto: false
     message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: CP15
+    clause: "실무 기준 / 음 소거"
+    check: bleep_mask_character
+    auto: false
+    message: "삐 처리는 별표(*)로 합니다."
+  - id: CP13
+    clause: "실무 기준 / 배경음악"
+    check: music_marker_style
+    auto: false
+    message: "음악 효과음 대괄호 안에 ♪를 넣지 않습니다."
+  - id: CP14
+    clause: "실무 기준 / 음 소거"
+    check: full_bleep_style
+    auto: false
+    message: "여러 단어가 삐 처리되면 [음 소거 효과음]으로 씁니다."
   - id: CP09
     clause: "실무 기준 / 문장부호"
     check: ellipsis_style_mismatch

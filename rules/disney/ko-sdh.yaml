@@ -60,7 +60,20 @@ songs:
 
 censorship:
   allowed: false
+  bleeped_word: "O"                 # 넷플릭스·쿠팡은 별표, 디즈니만 대문자 O
   full_sentence_bleep: "[음 소거 효과음]"
+
+music:
+  note_inside_bracket: true         # [♪ 잔잔한 음악] — 넷플릭스·쿠팡은 넣지 않는다
+  music_note: "♪"
+  space_between_note_and_text: true
+
+korean:
+  # 표준어와 비슷해도 **발화 그대로** 적는다(`니가`·`그치`).
+  # 넷플릭스·쿠팡은 표준어로 옮긴다(`네가`·`그렇지`). 한국어 교정기를 함께 돌릴 때
+  # 이 차이를 모르면 교정기가 발화 표기를 표준어로 바꿔 놓는다.
+  orthography: as_spoken
+  dialect: keep
 
 top_position:
   applied: true
@@ -76,6 +89,21 @@ rules:
     check: gap_too_short
     auto: false
     message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: DP12
+    clause: "실무 기준 / 배경음악"
+    check: music_marker_style
+    auto: false
+    message: "디즈니는 음악 효과음 대괄호 안에 ♪를 넣습니다."
+  - id: DP13
+    clause: "실무 기준 / 음 소거"
+    check: bleep_mask_character
+    auto: false
+    message: "디즈니는 삐 처리를 대문자 O로 합니다."
+  - id: DP14
+    clause: "실무 기준 / 음 소거"
+    check: full_bleep_style
+    auto: false
+    message: "여러 단어가 삐 처리되면 [음 소거 효과음]으로 씁니다."
   - id: DP08
     clause: "실무 기준 / 문장부호"
     check: ellipsis_style_inconsistent
