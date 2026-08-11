@@ -142,7 +142,7 @@ rules:
   - id: S11
     clause: "II.8 / II.9"
     check: bracket_unclosed
-    auto: true
+    auto: false
     message: "대괄호가 닫히지 않았습니다."
   - id: S12
     clause: "II.5 Dual Speaker/Multiple Events"

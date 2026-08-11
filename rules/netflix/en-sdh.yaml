@@ -199,7 +199,7 @@ rules:
   - id: ES08
     clause: "I.3 Continuity"
     check: em_or_en_dash
-    auto: true
+    auto: false
     message: "en/em 대시 대신 하이픈 두 개(--)로 급작스러운 중단을 표시합니다."
   - id: ES09
     clause: "I.15 Songs"
@@ -229,7 +229,7 @@ rules:
   - id: ES14
     clause: "I.16 Speaker ID / Sound Effects"
     check: bracket_unclosed
-    auto: true
+    auto: false
     message: "대괄호가 닫히지 않았습니다."
   - id: ES15
     clause: "I.17 Special Instructions"

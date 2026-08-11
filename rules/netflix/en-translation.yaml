@@ -176,7 +176,7 @@ rules:
   - id: ET04
     clause: "II.5 Continuity"
     check: em_or_en_dash
-    auto: true
+    auto: false
     message: "en/em 대시는 쓰지 않습니다. 급작스러운 중단은 하이픈 두 개(--)입니다."
   - id: ET05
     clause: "II.8 Dual Speakers"
