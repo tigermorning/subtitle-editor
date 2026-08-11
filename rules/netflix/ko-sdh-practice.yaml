@@ -44,13 +44,22 @@ text:
 
 sound_effect:
   discouraged_expressions: ["[정적]", "[조용해진다]", "[조용하다]"]
-  onomatopoeia_form: "[의성어 - 출처]"      # 예: [직 - 지퍼], [달칵 - 문]
+  style: onomatopoeia_plus_source          # [쾅 - 철문], [쨍 - 맥줏잔], [째깍째깍 - 효과음]
+  onomatopoeia_form: "[의성어 - 출처]"
+  prefer_dialogue_over_effect: true        # [한숨] 내가 못 살아 (x) -> 휴, 내가 못 살아 (o)
   omit_when_visible: true                  # 화면에 동작이 보이면 효과음 생략
 
 speaker_id:
   numbering_reset: scene                   # 씬이 바뀌면 화자 번호 초기화
   insert_on_first_line_of_speaker: true    # 화자의 첫 셀에만, 시공간 바뀌면 다시
   space_between_markers: true              # [화자명] [효과음] 사이 한 칸
+
+forced_narrative:
+  # 서사와 관련 있고 외국어면 번역해 화면 자막으로 잡는다.
+  # 한국 작품은 메인 타이틀·에피 타이틀에 화면 자막이 필요 없다.
+  translate_if_plot_pertinent_and_foreign: true
+  korean_title_cards: not_needed
+  overlap_with_dialogue: delete_forced_narrative
 
 shot_change:
   applied: true

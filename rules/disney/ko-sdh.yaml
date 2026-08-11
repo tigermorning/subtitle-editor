@@ -38,7 +38,16 @@ speaker_id:
 sound_effect:
   enclosure: "[]"
   discouraged_expressions: ["[정적]", "[조용해진다]", "[조용하다]"]
+  # 넷플릭스와 형식이 다르다. 디즈니는 의성어 뒤에 **상황을 서술**하고 `~ 소리`로
+  # 끝나도 된다 — 넷플릭스가 지양하는 표기가 디즈니에서는 정답이다.
+  style: onomatopoeia_plus_description     # [쾅 문 닫는 소리], [쨍 건배하는 소리]
+  descriptive_form_allowed: true           # [한숨 쉬며] 내가 못 살아 (o)
   omit_when_visible: true
+
+forced_narrative:
+  translate_if_plot_pertinent_and_foreign: true
+  korean_title_cards: not_needed
+  overlap_with_dialogue: delete_forced_narrative
 
 shot_change:
   applied: true

@@ -66,6 +66,20 @@ delivery:
   file_format: webvtt
   line_position_percent: 10     # WebVTT 속성 상/중 line 10%
 
+forced_narrative:
+  translate_if_plot_pertinent_and_foreign: true
+  korean_title_cards: not_needed
+  # 넷플릭스·디즈니는 대사와 겹치면 화면 자막을 지운다. **쿠팡은 지우지 않고**
+  # 화면 자막을 위에 배치해 대사와 함께 보여 준다.
+  overlap_with_dialogue: keep_both_top_position
+
+burned_in_caption:
+  # (예능) 번인 화면 자막이 대사와 같으면 대사를 적지 않는다.
+  # 필요하면 화자명만 더하고, 인점·아웃점은 번인 자막에 맞춘다.
+  same_as_dialogue: omit_dialogue
+  add_speaker_id_if_needed: true
+  timing: match_burned_in
+
 top_position:
   applied: true
 
