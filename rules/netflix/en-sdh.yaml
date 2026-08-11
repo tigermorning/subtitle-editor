@@ -165,12 +165,12 @@ rules:
     clause: "I.2 Character Limitation"
     check: line_length_exceeded
     auto: false
-    message: "한 줄 42자를 넘습니다."
+    message: "한 줄 {chars_per_line}자를 넘습니다."
   - id: ES02
     clause: "I.14 Reading Speed Limits"
     check: reading_speed_exceeded
     auto: false
-    message: "읽기 속도가 20 CPS(아동물 17)를 넘습니다."
+    message: "읽기 속도가 {cps_adult} CPS(아동물 {cps_children})를 넘습니다."
   - id: ES03
     clause: "I.8 Foreign Dialogue"
     check: forbidden_foreign_marker

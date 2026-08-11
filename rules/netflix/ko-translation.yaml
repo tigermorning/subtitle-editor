@@ -102,12 +102,12 @@ rules:
     clause: "I.2 Character Limitation"
     check: line_length_exceeded
     auto: false
-    message: "한 줄 16자를 넘습니다(라틴·공백·부호는 0.5자)."
+    message: "한 줄 {chars_per_line}자를 넘습니다(라틴·공백·부호는 0.5자)."
   - id: T02
     clause: "I.15 Reading Speed Limits"
     check: reading_speed_exceeded
     auto: false
-    message: "읽기 속도가 초당 12자(아동물 9자)를 넘습니다."
+    message: "읽기 속도가 초당 {cps_adult}자(아동물 {cps_children}자)를 넘습니다."
   - id: T05
     clause: "I.13 Punctuation"
     check: line_end_period_or_comma

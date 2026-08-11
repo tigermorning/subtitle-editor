@@ -51,12 +51,12 @@ rules:
     clause: "General Requirements / Duration"
     check: duration_out_of_range
     auto: false
-    message: "표시 시간이 0.833~7초 범위를 벗어납니다."
+    message: "표시 시간이 {duration_min_ms}~{duration_max_ms}ms 범위를 벗어납니다."
   - id: C02
     clause: "General Requirements / Line Treatment"
     check: too_many_lines
     auto: false
-    message: "자막은 최대 2줄입니다."
+    message: "자막은 최대 {max_lines}줄입니다."
   - id: C03
     clause: "General Requirements / Currency"
     check: currency_converted
