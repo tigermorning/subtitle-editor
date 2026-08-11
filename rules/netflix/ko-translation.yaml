@@ -25,6 +25,9 @@ limits:
     - quotation
 
 text:
+  # 말자막에 콜론·세미콜론은 쓰지 않는다. 대본의 화자 표시(`SARAH:`)가 그대로
+  # 실려 나가는 사고를 막는 그물이기도 하다(작업자 자료 100행).
+  forbidden_punctuation: [":", ";"]
   italics: forbidden                 # I.10 — 한국어는 이탤릭을 쓰지 않는다
   line_end_punctuation: forbidden    # I.13 — 줄 끝 마침표·쉼표 금지
   inline_comma: allowed
@@ -173,3 +176,8 @@ rules:
     check: line_break_top_heavy
     auto: false
     message: "아래 줄이 더 긴 형태를 권합니다(위반은 아닙니다)."
+  - id: T19
+    clause: "Korean TTSG I / Punctuation"
+    check: forbidden_punctuation
+    auto: true
+    message: "이 작업에서 쓰지 않는 문장부호입니다. 화자 표시에서 새어 나온 콜론은 자동으로 뗍니다."

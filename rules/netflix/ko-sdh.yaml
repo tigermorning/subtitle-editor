@@ -31,6 +31,7 @@ accuracy:
   dubbed_content: follow_dubbing_script
 
 text:
+  forbidden_punctuation: [";"]      # 콜론은 시각·대비 표기에 쓰인다(자료 393행)
   italics: forbidden
   ellipsis_char: "…"
 
@@ -177,3 +178,8 @@ rules:
     check: line_break_top_heavy
     auto: false
     message: "아래 줄이 더 긴 형태를 권합니다(위반은 아닙니다)."
+  - id: S17
+    clause: "Korean TTSG II / Punctuation"
+    check: forbidden_punctuation
+    auto: true
+    message: "이 작업에서 쓰지 않는 문장부호입니다. 화자 표시에서 새어 나온 콜론은 자동으로 뗍니다."
