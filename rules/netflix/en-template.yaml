@@ -1,0 +1,85 @@
+schema_version: 1
+platform: netflix
+language: en
+kind: translation
+extends: common.yaml
+status: complete
+source:
+  official: true
+  url: "https://partnerhelp.netflixstudios.com/hc/en-us/articles/219375728-Timed-Text-Style-Guide-Subtitle-Templates"
+  section: "Timed Text Style Guide: Subtitle Templates"
+  revision: "2024-06-28"
+  verified: "2026-08-11"
+
+# 다른 언어 번역의 바탕이 되는 **템플릿** 규정이다. 본편 영어 자막과 수치가 다르다 —
+# 읽기 속도가 20 CPS가 아니라 17 CPS다(아동물은 17이 아니라 15).
+# 템플릿을 본편 프로파일로 재면 통과해서는 안 될 것이 통과한다.
+#
+# 넷플릭스는 이것을 별도 문서로 두지만 우리 스키마의 kind로는 `translation`에 둔다 —
+# 화자 표시·효과음이 없는 대사 자막이라는 점에서 성격이 같다.
+
+limits:
+  chars_per_line: 42
+  char_weights:
+    cjk: 1.0
+    other: 1.0
+  reading_speed_cps:
+    adult: 17
+    children: 15
+  max_lines: 2
+
+text:
+  variant: en_US
+  ellipsis_char: "…"
+  double_space: forbidden
+
+font:
+  family: Arial
+  color: white
+
+delivery:
+  file_format: ttml1          # .dfxp / .xml / .ttml
+  units: percent
+
+include:
+  - plot_pertinent_dialogue
+  - foreign_dialogue_if_subtitled_in_original
+  - plot_pertinent_events
+  - on_screen_text
+  - forced_narratives_with_annotations
+  - dedications
+  - title_cards
+
+exclude:
+  - repeated_by_same_speaker_unless_plot_pertinent
+  - netflix_credits_unless_requested
+  - non_plot_pertinent_background_dialogue
+
+censorship:
+  allowed: false              # 검열된 욕설은 넣지 않는다. 별표를 쓴다
+  bleeped_word: "*"
+
+timing:
+  match_shot_and_source_audio: true
+
+rules:
+  - id: TP01
+    clause: "Subtitle Templates / Character Limitation"
+    check: line_length_exceeded
+    auto: false
+    message: "한 줄 {chars_per_line}자를 넘습니다."
+  - id: TP02
+    clause: "Subtitle Templates / Reading Speed"
+    check: reading_speed_exceeded
+    auto: false
+    message: "템플릿 읽기 속도가 {cps_adult} CPS(아동물 {cps_children})를 넘습니다."
+  - id: TP03
+    clause: "Subtitle Templates / Line Treatment"
+    check: three_dot_ellipsis
+    auto: true
+    message: "점 3개가 아니라 U+2026(…)을 씁니다."
+  - id: TP04
+    clause: "Subtitle Templates / Line Treatment"
+    check: double_space
+    auto: true
+    message: "이중 공백은 쓰지 않습니다."
