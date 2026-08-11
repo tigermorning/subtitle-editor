@@ -15,28 +15,7 @@ source:
 #
 # 수치는 자료의 [스펙] 표(문서 안 이미지)에서 읽었다. 넷플릭스와 같다.
 
-limits:
-  chars_per_line: 16
-  char_weights:
-    cjk: 1.0
-    other: 0.5
-  reading_speed_cps:
-    adult: 14
-    children: 11
-  max_lines: 2
-  duration_ms:
-    min: 834
-    max: 7000
-  min_gap_frames: 2
-
-speaker_id:
-  enclosure: "[]"
-  style: "[이름이 작게] / [이름이 영어로]"   # 넷플릭스는 슬래시로 나눈다
-  name_from_start_for_leads: true            # 주인공은 처음부터 이름, 단역은 밝혀진 뒤
-  foreign_return_marker: true                # 한국어로 돌아오면 [한국어] 표시
-  numbering_reset: scene          # 씬이 바뀌면 초기화(넷플릭스와 같다)
-  in_point_basis: shot_change     # 장면 전환 기준(얼굴이 보이면 화자명 불필요)
-  space_between_markers: true
+extends: common.yaml
 
 sound_effect:
   enclosure: "[]"
@@ -52,32 +31,9 @@ forced_narrative:
   korean_title_cards: not_needed
   overlap_with_dialogue: delete_forced_narrative
 
-shot_change:
-  applied: true
-  in_point: "장면 전환에 딱 맞추거나 0.5초 이상 벌린다"
-  out_point: "장면 전환 -2프레임에 맞추거나 0.5초 이상 벌린다"
-
-text:
-  # 전각 말줄임표와 온점 셋 중 어느 쪽이든 되지만 **한 작업물 안에서 통일**해야 한다.
-  # 발주처가 정해 주는 경우가 많고, 말이 없으면 반드시 물어볼 것.
-  no_comma_after_conjunctive_adverb: true   # 그러나, 또한, 사실, 뒤 쉼표 금지
-  ellipsis_char: null                # 전각·점 셋 둘 다 되지만 작업물 내 통일
-  ellipsis_consistency_required: true
-  double_punctuation: forbidden
-  tilde: forbidden
-  italics: forbidden
-  line_break: "적당히 보기 좋게"
-
 songs:
   lyrics_with_dialogue_in_one_event: forbidden   # 가사와 대사를 한 셀에 넣지 않는다
   forbidden_punctuation: []                      # 가사에 쉼표를 써도 된다
-
-numbers:
-  # 6만~8만 명 (o) / 6~8만 명 (x) / 6만 ~ 8만 명 (x)
-  range_notation_strict: true
-
-credit:
-  translator_credit: forbidden
 
 censorship:
   allowed: false
@@ -89,62 +45,13 @@ music:
   music_note: "♪"
   space_between_note_and_text: true
 
-korean:
-  # 표준어와 비슷해도 **발화 그대로** 적는다(`니가`·`그치`).
-  # 넷플릭스·쿠팡은 표준어로 옮긴다(`네가`·`그렇지`). 한국어 교정기를 함께 돌릴 때
-  # 이 차이를 모르면 교정기가 발화 표기를 표준어로 바꿔 놓는다.
-  orthography: as_spoken
-  dialect: keep
-
-top_position:
-  applied: true
 
 rules:
-  - id: DP00
-    clause: "실무 스펙 / 듀레이션·글자 수"
-    check: [duration_out_of_range, line_length_exceeded, reading_speed_exceeded]
-    auto: false
-    message: "디즈니 스펙(0.834~7초, {chars_per_line}자, {cps_adult} CPS)을 벗어납니다."
-  - id: DP07
-    clause: "실무 스펙 / 자막 간격"
-    check: gap_too_short
-    auto: false
-    message: "자막 사이를 2프레임 이상 벌립니다."
-  - id: DP20
-    clause: "실무 자료 / 범위 표기"
-    check: range_notation
-    auto: false
-    message: "범위는 양쪽에 단위를 붙이고 부호 앞뒤를 띄우지 않습니다."
-  - id: DP21
-    clause: "실무 자료 / 문장부호"
-    check: conjunctive_adverb_comma
-    auto: false
-    message: "접속부사 뒤에는 쉼표를 쓰지 않습니다."
   - id: DP18
     clause: "실무 기준 / 노래"
     check: lyrics_with_dialogue
     auto: false
     message: "가사와 대사를 한 자막에 넣지 않습니다."
-  - id: DP19
-    clause: "실무 기준 / 크레딧"
-    check: translator_credit_present
-    auto: false
-    message: "디즈니는 자막 제작자 크레딧을 넣지 않습니다."
-  - id: DP15
-    clause: "실무 기준 / 화자명"
-    check: speaker_id_enclosure
-    auto: false
-    message: "화자명은 대괄호로 씁니다."
-  - id: DP16
-    clause: "실무 기준 / 화자명"
-    check: speaker_id_conjunction
-    auto: false
-    message: "동시 발화는 쉼표로 나열하거나 [함께]로 씁니다."
-  - id: DP17
-    clause: "실무 기준 / 화자명"
-    check: speaker_id_alone_on_line
-    auto: false
-    message: "화자명과 대사 첫마디는 같은 줄에 둡니다."
   - id: DP12
     clause: "실무 기준 / 배경음악"
     check: music_marker_style
@@ -160,21 +67,6 @@ rules:
     check: full_bleep_style
     auto: false
     message: "여러 단어가 삐 처리되면 [음 소거 효과음]으로 씁니다."
-  - id: DP08
-    clause: "실무 기준 / 문장부호"
-    check: ellipsis_style_inconsistent
-    auto: false
-    message: "말줄임표 표기가 섞였습니다. 작업물 안에서 통일합니다."
-  - id: DP09
-    clause: "실무 기준 / 문장부호"
-    check: double_punctuation
-    auto: false
-    message: "이중 부호를 쓰지 않습니다."
-  - id: DP10
-    clause: "실무 기준 / 문장부호"
-    check: tilde_used
-    auto: false
-    message: "물결표를 쓰지 않습니다."
   - id: DP11
     clause: "실무 기준 / 효과음"
     check: sound_effect_multiline
@@ -190,28 +82,3 @@ rules:
     check: discouraged_silence_expression
     auto: false
     message: "[정적]·[조용해진다] 같은 표현은 지양합니다."
-  - id: DP03
-    clause: "General / Line Treatment"
-    check: too_many_lines
-    auto: false
-    message: "자막은 최대 {max_lines}줄입니다."
-  - id: DP04
-    clause: "실무 기준 / 단위 표기"
-    check: unit_composed_character
-    auto: false
-    message: "단위는 조합 문자를 쓰지 않고 풀어 씁니다."
-  - id: DP05
-    clause: "실무 기준 / 줄바꿈"
-    check: line_break_position
-    auto: false
-    message: "줄바꿈이 문법 단위를 끊었습니다."
-  - id: DP06
-    clause: "실무 기준 / 노래"
-    check: music_note_spacing
-    auto: true
-    message: "음표 앞뒤로 한 칸씩 띄웁니다."
-  - id: DP010
-    clause: "실무 기준 / 자막 위치"
-    check: position_collides_with_forced_narrative
-    auto: true
-    message: "화면 글자와 겹칩니다. 말자막을 상단 중앙으로 올립니다(겹침이 끝나면 되돌립니다)."

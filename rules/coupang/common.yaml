@@ -1,0 +1,169 @@
+schema_version: 1
+platform: coupang
+language: ko
+kind: common
+status: complete
+source:
+  official: false
+  client: "작업자 실무 자료 (rules/sources/작업자-자료 / 작업 기본 원칙)"
+  section: "쿠팡플레이 한국어 실무 기준 — SDH·번역 공통부"
+  revision: "2026-08-11"
+  verified: "2026-08-11"
+
+# 쿠팡플레이는 공식 자막 제작 가이드를 공개하지 않는다(coupang/UNAVAILABLE.yaml 참고).
+# 이 프로파일은 **작업자가 실제 납품하며 정리한 기준**이다. 공식 문서가 아니므로
+# source.client로 출처를 밝힌다.
+#
+# 수치는 자료의 [스펙] 표(문서 안 이미지)에서 읽었다. 넷플릭스·디즈니와 다른 곳:
+# 듀레이션 상한이 6초이고, 불가피할 때 CPL 20자·3줄까지 열어 둔다.
+
+# **종류를 가리지 않는 부분이다.** 화자명·어조·문장부호·스펙은 SDH와 번역
+# 자막이 같다(작업자 지적 2026-08-11). 한 군데 두고 양쪽이 상속한다.
+
+limits:
+  chars_per_line: 16          # 불가피할 경우 20자까지 (사람이 판단할 예외)
+  chars_per_line_hard: 20
+  char_weights:
+    cjk: 1.0
+    other: 0.5
+  reading_speed_cps:
+    adult: 14
+    children: 11
+  max_lines: 2                # 불가피할 경우 3줄까지
+  max_lines_hard: 3
+  duration_ms:
+    min: 834
+    max: 6000                 # 넷플릭스·디즈니는 7초, 쿠팡만 6초
+  min_gap_frames: 2
+
+speaker_id:
+  # 넷플릭스·디즈니는 대괄호, **쿠팡은 소괄호**로 화자명을 쓴다.
+  # 효과음은 셋 다 대괄호다: (철수) [작게], (철수) [영어]
+  enclosure: "()"
+  style: "(이름) [어조] [언어]"
+  foreign_return_marker: true          # 한국어로 돌아오면 [한국어] 표시
+  numbering_reset: episode      # 넷플릭스·디즈니와 다르다 — 에피소드 내내 번호 유지
+  in_point_basis: dialogue_start  # 대사 시작 기준(얼굴이 안 보이면 화자명 삽입)
+  space_between_markers: true
+
+shot_change:
+  applied: false                # 쿠팡은 장면 전환을 적용하지 않는다
+
+korean:
+  orthography: standard             # 표준어와 비슷하면 표준어로(`네가`·`그렇지`)
+  dialect: keep
+
+numbers:
+  # 6만~8만 명 (o) / 6~8만 명 (x) / 6만 ~ 8만 명 (x)
+  range_notation_strict: true
+
+credit:
+  translator_credit: required        # 자막: 홍길동
+  credit_duration_ms: 2000
+
+delivery:
+  first_cue_not_at_zero: true        # 첫 셀 인점 00:00:00:00 불가
+  file_format: webvtt
+  line_position_percent: 10     # WebVTT 속성 상/중 line 10%
+
+top_position:
+  applied: true
+
+text:
+  no_comma_after_conjunctive_adverb: true   # 그러나, 또한, 사실, 뒤 쉼표 금지
+  ellipsis_char: "..."              # 쿠팡은 점 셋 — 넷플릭스와 정반대다
+  double_punctuation: forbidden
+  tilde: forbidden
+  italics: forbidden
+  line_break: "적당히 보기 좋게"     # 넷플릭스의 '16자 이하 한 줄' 규정은 없다               # 화면 텍스트와 겹치면 상단 처리
+
+
+# 작업마다 달라지는 것. 프로파일이 정하지 않고 **작업 시작 전에 고른다**.
+forced_narrative:
+  marker: ask
+
+collision:
+  policy: ask
+  move_to: top_center
+
+rules:
+  - id: CP00
+    clause: "실무 스펙 / 듀레이션·글자 수"
+    check: [duration_out_of_range, line_length_exceeded, reading_speed_exceeded]
+    auto: false
+    message: "쿠팡 스펙(0.834~6초, {chars_per_line}자, {cps_adult} CPS)을 벗어납니다."
+  - id: CP08
+    clause: "실무 스펙 / 자막 간격"
+    check: gap_too_short
+    auto: false
+    message: "자막 사이를 2프레임 이상 벌립니다."
+  - id: CP21
+    clause: "실무 자료 / 범위 표기"
+    check: range_notation
+    auto: false
+    message: "범위는 양쪽에 단위를 붙이고 부호 앞뒤를 띄우지 않습니다."
+  - id: CP22
+    clause: "실무 자료 / 문장부호"
+    check: conjunctive_adverb_comma
+    auto: false
+    message: "접속부사 뒤에는 쉼표를 쓰지 않습니다."
+  - id: CP20
+    clause: "실무 기준 / 납품"
+    check: first_event_at_zero
+    auto: false
+    message: "첫 자막 인점을 00:00:00:00으로 두지 않습니다."
+  - id: CP16
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_enclosure
+    auto: false
+    message: "쿠팡은 화자명을 소괄호로 씁니다."
+  - id: CP17
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_conjunction
+    auto: false
+    message: "동시 발화는 쉼표로 나열하거나 [함께]로 씁니다."
+  - id: CP18
+    clause: "실무 기준 / 화자명"
+    check: speaker_id_alone_on_line
+    auto: false
+    message: "화자명과 대사 첫마디는 같은 줄에 둡니다."
+  - id: CP09
+    clause: "실무 기준 / 문장부호"
+    check: ellipsis_style_mismatch
+    auto: true
+    message: "쿠팡은 점 셋(...)을 씁니다."
+  - id: CP10
+    clause: "실무 기준 / 문장부호"
+    check: double_punctuation
+    auto: false
+    message: "이중 부호를 쓰지 않습니다."
+  - id: CP11
+    clause: "실무 기준 / 문장부호"
+    check: tilde_used
+    auto: false
+    message: "물결표를 쓰지 않습니다."
+  - id: CP04
+    clause: "General / Line Treatment"
+    check: too_many_lines
+    auto: false
+    message: "자막은 최대 {max_lines}줄입니다."
+  - id: CP05
+    clause: "실무 기준 / 단위 표기"
+    check: unit_composed_character
+    auto: false
+    message: "단위는 조합 문자를 쓰지 않고 풀어 씁니다."
+  - id: CP06
+    clause: "실무 기준 / 줄바꿈"
+    check: line_break_position
+    auto: false
+    message: "줄바꿈이 문법 단위를 끊었습니다."
+  - id: CP07
+    clause: "실무 기준 / 노래"
+    check: music_note_spacing
+    auto: true
+    message: "음표 앞뒤로 한 칸씩 띄웁니다."
+  - id: CP23
+    clause: "실무 기준 / 자막 위치"
+    check: position_collides_with_forced_narrative
+    auto: true
+    message: "화면 글자와 겹칩니다. 말자막을 상단 중앙으로 올립니다(겹침이 끝나면 되돌립니다)."
