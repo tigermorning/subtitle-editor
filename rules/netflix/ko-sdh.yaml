@@ -144,6 +144,9 @@ rules:
     check: bracket_unclosed
     auto: false
     message: "대괄호가 닫히지 않았습니다."
+  # 미구현으로 남긴다. 한국어 자막은 줄 끝 문장부호를 쓰지 않으므로 문장이
+  # 끝났는지를 부호로 알 수 없고, 판정하려면 문장 성분 분석이 필요하다.
+  # 형태소 분석기를 붙일 때 다시 본다 — 그때까지는 검사하지 않았다고 출력한다.
   - id: S12
     clause: "II.5 Dual Speaker/Multiple Events"
     check: sentence_split_across_events
