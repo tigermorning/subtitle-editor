@@ -183,3 +183,23 @@ rules:
     check: space_between_markers
     auto: true
     message: "표시끼리는 붙여 씁니다. 한 칸은 마지막 표시와 대사 사이에만 둡니다."
+  - id: CC30
+    clause: "작업자 첨삭 / 화폐 표기"
+    check: currency_bul
+    auto: true
+    message: "화폐 단위 '불'은 쓰지 않습니다. '달러'로 적습니다."
+  - id: CC31
+    clause: "작업자 첨삭 / 특수기호"
+    check: special_symbol
+    auto: false
+    message: "자막에는 특수기호를 쓰지 않습니다. 말로 풀어 적습니다."
+  - id: CC32
+    clause: "작업자 자료 / 숫자 표기"
+    check: hangul_clock
+    auto: false
+    message: "시각은 아라비아 숫자로 적습니다."
+  - id: CC33
+    clause: "작업자 자료 / 숫자 표기"
+    check: hangul_number_ten_plus
+    auto: false
+    message: "10 이상은 아라비아 숫자로 적습니다(10 미만은 소리 나는 대로)."
