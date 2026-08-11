@@ -1,0 +1,230 @@
+schema_version: 1
+platform: netflix
+language: en
+kind: translation
+extends: common.yaml
+status: complete
+source:
+  official: true
+  url: "https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide"
+  section: "English (USA) Timed Text Style Guide — Section II (Subtitles, interlingual)"
+  revision: "2025-12-19"
+  verified: "2026-08-11"
+
+# 비영어 원본 -> 미국 영어 번역 자막. 한국 드라마에 영어 자막을 붙일 때 쓰는 프로파일이다.
+# 한국어 프로파일과 수치·표기가 다르다. 특히 이탤릭(한국어 금지 / 영어 사용)과
+# 2인 화자 하이픈(한국어 "- " / 영어 "-")이 정반대다.
+
+limits:
+  chars_per_line: 42
+  char_weights:
+    cjk: 1.0
+    other: 1.0
+  reading_speed_cps:
+    adult: 20
+    children: 17
+  max_lines: 2
+
+text:
+  variant: en_US                     # 영어 변이형 혼용 금지
+  italics: allowed
+  line_end_punctuation: allowed
+  double_space: forbidden
+  ellipsis_char: "…"
+  em_en_dash: forbidden
+  complex_punctuation: avoid         # 콜론·세미콜론
+  comma_overuse: avoid
+  exclamation: shout_or_surprise_only
+  interrobang: allowed
+  hashtag_symbol: allowed
+  ampersand_in_initialism: allowed
+  spelling_variant: most_common      # okay (OK 아님)
+  capitalize_always: [Black, Deaf, Indigenous]
+
+italics_use:
+  - narration
+  - unspoken_thoughts
+  - song_lyrics                      # 판권 있을 때
+  - unfamiliar_foreign_word          # Merriam-Webster 미등재
+  - electronic_media_speaker_absent  # 전화·TV·AI·내비 (화면에 없는 화자)
+  - published_work_title             # 에피소드·곡 제목은 따옴표
+  - emphasis_not_conveyable_by_punctuation
+italics_not_for:
+  - speaker_offscreen_but_in_scene
+  - proper_names
+  - dictionary_listed_foreign_word   # rendezvous
+
+continuity:
+  pause_threshold_ms: 2000
+  continued_sentence: no_marker
+  pause_or_trailing: ellipsis
+  abrupt_interruption: "--"          # 하이픈 두 개
+  mid_sentence_start: leading_ellipsis_no_space
+  forced_narrative_interruption: ellipsis_both_sides
+
+dual_speaker:
+  marker: "-"                        # 공백 없는 하이픈 (한국어와 다르다)
+  one_per_line: true
+  self_contained_lines: true
+
+forced_narrative:
+  include_when: plot_pertinent
+  case: upper                        # 전부 대문자
+  case_exception: long_passage_sentence_case   # 프롤로그·에필로그
+  match_onscreen_duration: true
+  merge_with_dialogue: forbidden
+  delete_redundant: true
+
+quotes:
+  primary: double
+  nested: single                     # 인용 내 인용·곡 제목
+  period_comma: inside
+  colon_semicolon: outside
+  question_exclamation: outside_unless_quoted
+  span_multiple_events: open_first_close_last
+  air_quotes: mark
+
+numbers:
+  spell_out_range: [0, 10]
+  numerals_from: 11
+  sentence_initial: spell_out
+  sentence_initial_exception: [three_or_more_words, unit, date]
+  ages: numerals
+  exact_time: "numerals + lowercase a.m./p.m."
+  spell_out: ["half past", "quarter of", midnight, noon, o_clock_number]
+  consistency_within_sentence: true  # "Six or seven", "Six or 7" 금지
+
+dates:
+  order: spoken                      # March 6th (the/of 생략)
+  decades: numerals                  # 1950s, '50s
+  centuries: ordinal                 # 20th century
+  ages_apostrophe: avoid
+
+names:
+  translate: only_if_approved
+  korean_order: family_given         # 성-이름 순서 유지
+  korean_south: hyphenated_given_lowercase_second   # Kim Hee-sun
+  korean_north: spaced_no_hyphen                    # Kim Jong Un
+  chinese_given: joined_capitalize_first            # Ning Shizheng
+  romanization: standardized_guides
+  established_localized: allowed_exception
+
+foreign_dialogue:
+  translate_when: subtitled_in_original
+  italicize_unfamiliar: true
+  english_lines_in_multilingual: do_not_subtitle_unless_instructed
+
+documentary:
+  translate_title_only: true         # 이름·회사명 제외
+  first_appearance_only: true
+  title_interrupting_dialogue: ellipsis_both_sides
+  news_ticker: only_if_plot_pertinent
+  italics_for_onscreen_speaker: false
+
+repetitions:
+  meaningful: may_replicate
+  heavy_repetition: first_two_or_three_only
+
+songs:
+  subtitle_when: [plot_pertinent, rights_granted]
+  opening_ending_theme: rarely_for_adult_except_sdh
+  italics: true
+  capitalize_line_start: true
+  line_end_punctuation: [question_mark, exclamation_mark]
+  inline_comma: allowed_if_needed
+  album_title: italics
+  song_title: quotes
+  background_continues: ellipsis
+  poetry: same_without_music_notes
+
+titles:
+  main_title: approved_only
+  skip_if_identical_to_onscreen: true
+  split_across_events: forbidden
+  italics: false
+  episode_title: only_if_onscreen_or_voiced
+  published_work: official_translation_else_original
+
+censorship:
+  allowed: false
+  bleeped_word: "*"                  # 들리는 음절만
+  n_word_er: [historical, racist_slur]
+  n_word_a: [slang, non_racist, lyrics]
+
+brand_names: [known_name, local_equivalent, generic]
+
+timing:
+  sync_tolerance_frames: 3
+  out_time_extension_frames: 12      # 읽기 속도가 필요할 때 10~12프레임까지
+
+rules:
+  - id: ET01
+    clause: "II / Character Limitation"
+    check: line_length_exceeded
+    auto: false
+    message: "한 줄 42자를 넘습니다."
+  - id: ET02
+    clause: "II / Reading Speed Limits"
+    check: reading_speed_exceeded
+    auto: false
+    message: "읽기 속도가 20 CPS(아동물 17)를 넘습니다."
+  - id: ET03
+    clause: "II.5 Continuity"
+    check: three_dot_ellipsis
+    auto: true
+    message: "점 3개가 아니라 U+2026(…)을 씁니다."
+  - id: ET04
+    clause: "II.5 Continuity"
+    check: em_or_en_dash
+    auto: true
+    message: "en/em 대시는 쓰지 않습니다. 급작스러운 중단은 하이픈 두 개(--)입니다."
+  - id: ET05
+    clause: "II.8 Dual Speakers"
+    check: dual_speaker_marker_format
+    auto: true
+    message: "2인 화자 하이픈 뒤에 공백을 넣지 않습니다."
+  - id: ET06
+    clause: "II.10 On-Screen Text / Forced Narratives"
+    check: forced_narrative_not_uppercase
+    auto: false
+    message: "강제 자막은 전부 대문자입니다(긴 문단은 예외)."
+  - id: ET07
+    clause: "II.10 On-Screen Text / Forced Narratives"
+    check: forced_narrative_merged_with_dialogue
+    auto: false
+    message: "강제 자막과 대사를 같은 자막에 합치지 않습니다."
+  - id: ET08
+    clause: "II.14 Numbers"
+    check: number_spelling_range
+    auto: false
+    message: "0~10은 문자, 11 이상은 숫자입니다(나이는 항상 숫자)."
+  - id: ET09
+    clause: "II.14 Numbers"
+    check: number_style_inconsistent_in_sentence
+    auto: false
+    message: "한 문장 안에서 숫자 표기 방식이 섞였습니다."
+  - id: ET10
+    clause: "II.15 Punctuation"
+    check: double_space
+    auto: true
+    message: "이중 공백은 쓰지 않습니다."
+  - id: ET11
+    clause: "II.4 Character Names"
+    check: korean_name_romanization
+    auto: false
+    message: "한국 인명은 성-이름 순서, 남한식은 하이픈 + 둘째 글자 소문자(Kim Hee-sun)입니다."
+  - id: ET12
+    clause: "II.19 Songs"
+    check: lyric_line_end_punctuation
+    auto: false
+    message: "가사 줄 끝에는 물음표·느낌표만 옵니다."
+  - id: ET13
+    clause: "II.18 Repetitions"
+    check: heavy_repetition_subtitled
+    auto: false
+    message: "반복이 과하면 처음 2~3회만 자막화합니다."
+  - id: ET14
+    clause: "II.21 Special Instructions"
+    check: mixed_english_variant
+    auto: false
+    message: "영어 변이형이 섞였습니다(미국 영어로 통일)."

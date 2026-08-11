@@ -1,0 +1,238 @@
+schema_version: 1
+platform: netflix
+language: en
+kind: sdh
+extends: common.yaml
+status: complete
+source:
+  official: true
+  url: "https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide"
+  section: "English (USA) Timed Text Style Guide — Section I (SDH)"
+  revision: "2025-12-19"
+  verified: "2026-08-11"
+
+# 영어 SDH. 영어 음성 콘텐츠(원본 영어 또는 영어 더빙)의 청각장애인용 자막이다.
+# 한국 드라마 원본에 붙이는 영어 자막은 en-translation.yaml 쪽이다 —
+# 영어 더빙본에 SDH를 붙일 때 이 프로파일을 쓴다.
+
+limits:
+  chars_per_line: 42
+  char_weights:
+    cjk: 1.0
+    other: 1.0
+  reading_speed_cps:
+    adult: 20
+    children: 17
+  max_lines: 2
+
+accuracy:
+  paraphrase: forbidden
+  simplify: forbidden
+  reduction_strategy: [delete, condense]
+  preserve: [dialect_features, slang, regional_vocabulary]
+  dubbed_content: match_dubbed_audio
+  non_us_titles_keep_source_words: true    # Mum -> Mom 으로 바꾸지 않는다
+
+text:
+  variant: en_US
+  italics: allowed
+  double_space: forbidden
+  ellipsis_char: "…"
+  em_en_dash: forbidden
+  complex_punctuation: avoid
+  exclamation: shout_or_surprise_only
+  interrobang: allowed
+  spelling_variant: most_common
+  capitalize_always: [Black, Deaf, Indigenous]
+
+italics_use:
+  - narration
+  - unspoken_thoughts
+  - song_lyrics
+  - unfamiliar_foreign_word
+  - electronic_media_speaker_absent
+  - published_work_title
+  - emphasis_not_conveyable_by_punctuation
+italics_not_for:
+  - speaker_id           # 대사가 이탤릭이어도 화자 표시는 이탤릭 금지
+  - sound_effect
+  - speaker_offscreen_but_in_scene
+
+speaker_id:
+  enclosure: "[]"
+  case: lower                        # 고유명사만 대문자
+  vocabulary: en_US                  # [running faucet], tap 아님
+  use_when: not_visually_identifiable
+  same_line_as_dialogue: preferred
+  format_with_dash: "-[{name}] {dialogue}"
+  unknown_person: ["[man]", "[woman]", "[male voice]", "[female voice]"]
+  numbering: ["[man 1]", "[man 2]"]
+  identified_character: use_name
+  formal_context_surname: [political, crime_documentary]
+  italics: forbidden
+
+sound_effect:
+  enclosure: "[]"
+  case: lower
+  describe: audio_only
+  plot_pertinent_only: true
+  skip_when_visually_obvious: true
+  meaningful_silence: true
+  use_adverbs: true
+  paralinguistics: ["hmm", "um", "whoa"]        # 플롯·분위기·캐릭터성에 관계될 때
+  discouraged_labels: ["[stutters]", "[stammers]"]
+  hesitation_alternative: "[hesitates]"
+  interrupting_dialogue: separate_element
+  natural_collocations: true
+  italics: forbidden
+
+dual_speaker:
+  marker: "-"                        # 공백 없는 하이픈
+  one_per_line: true
+  self_contained_lines: true
+  hyphen_when: different_source
+  hyphen_when_self_emitted: false
+
+continuity:
+  pause_threshold_ms: 2000
+  continued_sentence: no_marker
+  pause_or_trailing: ellipsis
+  abrupt_interruption: "--"
+  mid_sentence_start: leading_ellipsis_no_space
+  sound_effect_interruption: ellipsis
+
+foreign_dialogue:
+  translated_marker: "[in {language}]"        # [in Spanish]
+  untranslatable_marker: "[speaking {language}]"
+  forbidden_markers: ["[speaking foreign language]"]
+  accent_marker: "[in {language} accent]"
+  mark_first_event_after_change_only: true
+  loanword_in_english: italicize_no_marker
+  diacritics: preserve
+  transliterate_confusing_chars: true         # Þór -> Thór
+
+music:
+  music_note: "♪"
+  space_between_note_and_text: true
+  wrap_each_line: true
+  duet_wrap_each_sung_line: true
+  italics: true
+  capitalize_line_start: true                  # 두 번째 줄도 대문자
+  line_end_punctuation: [question_mark, exclamation_mark]
+  inline_comma: allowed_if_needed
+  title_marker: "[{title} playing]"
+  ambient_generic: "[rock music playing over stereo]"
+  non_lyrical: "[menacing electronic music plays]"
+  description: objective
+  album_title: italics
+  song_title: quotes
+  subtitle_all_audible_lyrics: true            # 대사를 방해하지 않는 한
+  background_continues: ellipsis
+
+numbers:
+  spell_out_range: [0, 10]
+  numerals_from: 11
+  ages: numerals
+  exact_time: "numerals + lowercase a.m./p.m."
+
+dates:
+  order: spoken
+  decades: numerals
+  centuries: ordinal
+
+quotes:
+  primary: double
+  nested: single
+  period_comma: inside
+  colon_semicolon: outside
+  song_title: quotes
+  reading_aloud: quotes
+  air_quotes: mark
+
+censorship:
+  allowed: false
+  bleeped_word: "*"                  # 들리는 음절만, 길이 일치
+  n_word_er: [historical, racist_slur]
+  n_word_a: [slang, non_racist, lyrics]
+  mispronunciation: reproduce_only_if_plot_or_character
+
+timing:
+  sync_tolerance_frames: 3
+  out_time_extension_frames: 12
+
+rules:
+  - id: ES01
+    clause: "I.2 Character Limitation"
+    check: line_length_exceeded
+    auto: false
+    message: "한 줄 42자를 넘습니다."
+  - id: ES02
+    clause: "I.14 Reading Speed Limits"
+    check: reading_speed_exceeded
+    auto: false
+    message: "읽기 속도가 20 CPS(아동물 17)를 넘습니다."
+  - id: ES03
+    clause: "I.8 Foreign Dialogue"
+    check: forbidden_foreign_marker
+    auto: false
+    message: "[speaking foreign language]는 쓸 수 없습니다. 실제 언어를 조사하세요."
+  - id: ES04
+    clause: "I.16 Speaker ID / Sound Effects"
+    check: speaker_id_uppercase
+    auto: true
+    message: "화자 표시·효과음은 고유명사 외에는 소문자입니다."
+  - id: ES05
+    clause: "I.9 Italics"
+    check: italic_speaker_id_or_sound_effect
+    auto: true
+    message: "화자 표시·효과음에는 이탤릭을 쓰지 않습니다."
+  - id: ES06
+    clause: "I.16 Speaker ID / Sound Effects"
+    check: stutter_label
+    auto: false
+    message: "실제 말더듬이 아니면 [stutters] 대신 전사나 [hesitates]를 씁니다."
+  - id: ES07
+    clause: "I.3 Continuity"
+    check: three_dot_ellipsis
+    auto: true
+    message: "점 3개가 아니라 U+2026(…)을 씁니다."
+  - id: ES08
+    clause: "I.3 Continuity"
+    check: em_or_en_dash
+    auto: true
+    message: "en/em 대시 대신 하이픈 두 개(--)로 급작스러운 중단을 표시합니다."
+  - id: ES09
+    clause: "I.15 Songs"
+    check: music_note_spacing
+    auto: true
+    message: "음표와 텍스트 사이에 공백 한 칸이 필요합니다."
+  - id: ES10
+    clause: "I.15 Songs"
+    check: music_note_unpaired
+    auto: false
+    message: "가사 줄의 앞뒤 음표 짝이 맞지 않습니다."
+  - id: ES11
+    clause: "I.15 Songs"
+    check: lyric_line_not_capitalized
+    auto: true
+    message: "가사는 각 줄 첫 글자를 대문자로 씁니다(둘째 줄 포함)."
+  - id: ES12
+    clause: "I.6 Dual Speakers/Multiple Events"
+    check: dual_speaker_marker_format
+    auto: true
+    message: "2인 화자 하이픈 뒤에 공백을 넣지 않습니다."
+  - id: ES13
+    clause: "I.12 Punctuation"
+    check: double_space
+    auto: true
+    message: "이중 공백은 쓰지 않습니다."
+  - id: ES14
+    clause: "I.16 Speaker ID / Sound Effects"
+    check: bracket_unclosed
+    auto: true
+    message: "대괄호가 닫히지 않았습니다."
+  - id: ES15
+    clause: "I.17 Special Instructions"
+    check: capitalization_of_identity_terms
+    auto: false
+    message: "Black·Deaf·Indigenous는 대문자로 씁니다."
