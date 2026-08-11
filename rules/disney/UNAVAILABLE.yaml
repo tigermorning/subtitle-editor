@@ -1,0 +1,30 @@
+schema_version: 1
+platform: disney
+language: null
+kind: common
+status: unavailable
+source:
+  official: false
+  url: "https://help.disneyplus.com/article/disneyplus-en-us-format-captions"
+  section: "공식 제작 가이드 아님 — 시청자용 자막 표시 설정 안내"
+  revision: null
+  verified: "2026-08-11"
+
+# 디즈니+의 자막 스타일 가이드는 파트너·벤더 전용 비공개 문서다.
+#   - Disney Digital Supply Chain Subtitle and CC Style Guide (v1.1.1, 2022-06-06)
+#   - Disney Style Guide — English SDH (2023-06-15 개정판 존재)
+# 공개 웹에는 문서 공유 사이트 업로드본만 있고 본문 열람이 안 된다.
+#
+# 웹에 도는 수치(줄당 42자, 20 CPS, 최소 1초, 자막 간 2프레임, IMSC 1.1)는
+# 번역업체 블로그와 업로드본에서 나온 2차 정보다. **여기에 적지 않는다.**
+# 추측값이 프로파일에 들어가면 그 순간부터 근거 없는 검사가 된다.
+#
+# 확보 경로: 디즈니 로컬라이제이션 벤더 계약 시 제공되는 파트너 포털,
+#           또는 DMED 파트너 담당자에게 직접 요청.
+#
+# 미확인 항목: 한국어 줄당 글자 수 / 한국어 CPS / 최소·최대 표시 시간 /
+#             자막 간 간격 / 이탤릭 정책 / 화자 표시·효과음 표기 형식 /
+#             ♪ 사용 규칙 / 강제 자막 표기 / 인명 표기
+
+limits: {}
+rules: []

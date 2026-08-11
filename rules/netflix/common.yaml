@@ -1,0 +1,69 @@
+schema_version: 1
+platform: netflix
+language: null
+kind: common
+status: complete
+source:
+  official: true
+  url: "https://partnerhelp.netflixstudios.com/hc/en-us/articles/215758617-Timed-Text-Style-Guide-General-Requirements"
+  section: "Timed Text Style Guide: General Requirements"
+  revision: "2022-10-07"
+  verified: "2026-08-11"
+
+# SDH·번역 자막 양쪽에 공통 적용되는 층.
+limits:
+  max_lines: 2
+  prefer_single_line: true
+  duration_ms:
+    min: 833      # 5/6초 (24fps 기준 20프레임)
+    max: 7000
+
+delivery:
+  file_format: ttml1          # .xml / .ttml
+  encoding: utf-8
+  glyph_list: netflix         # Netflix Glyph List 외 문자 금지
+  positioning:
+    align: center
+    anchor: [top, bottom]
+    units: percent            # px 금지
+    font_size_percent: 100
+
+line_break:
+  shape: bottom_heavy         # 여러 선택지가 있으면 아래 줄이 더 긴 형태
+  break_after: [punctuation]
+  break_before: [conjunction, preposition]
+  never_split:
+    - article_noun
+    - adjective_noun
+    - first_last_name
+    - subject_pronoun_verb
+    - prepositional_phrase
+    - auxiliary_verb
+    - reflexive_pronoun
+    - negation
+
+consistency:
+  proper_nouns: knp           # 시즌·에피소드 간 KNP 테이블로 통일
+  formality_table: true
+
+rules:
+  - id: C01
+    clause: "General Requirements / Duration"
+    check: duration_out_of_range
+    auto: false
+    message: "표시 시간이 0.833~7초 범위를 벗어납니다."
+  - id: C02
+    clause: "General Requirements / Line Treatment"
+    check: too_many_lines
+    auto: false
+    message: "자막은 최대 2줄입니다."
+  - id: C03
+    clause: "General Requirements / Currency"
+    check: currency_converted
+    auto: false
+    message: "통화를 환산하지 않습니다."
+  - id: C04
+    clause: "General Requirements / Glyph List"
+    check: glyph_not_allowed
+    auto: false
+    message: "Netflix Glyph List에 없는 문자입니다."

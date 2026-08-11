@@ -1,0 +1,170 @@
+schema_version: 1
+platform: netflix
+language: ko
+kind: translation
+extends: common.yaml
+status: complete
+source:
+  official: true
+  url: "https://partnerhelp.netflixstudios.com/hc/en-us/articles/216001127-Korean-Timed-Text-Style-Guide"
+  section: "Korean Timed Text Style Guide — Section I (Korean Subtitles)"
+  revision: "2025-07-07"
+  verified: "2026-08-11"
+
+limits:
+  chars_per_line: 16
+  char_weights:
+    cjk: 1.0
+    other: 0.5          # 라틴 문자·공백·문장부호
+  reading_speed_cps:
+    adult: 12
+    children: 9
+  max_lines: 2
+  two_line_exceptions:
+    - three_or_more_punctuation
+    - quotation
+
+text:
+  italics: forbidden                 # I.10 — 한국어는 이탤릭을 쓰지 않는다
+  line_end_punctuation: forbidden    # I.13 — 줄 끝 마침표·쉼표 금지
+  inline_comma: allowed
+  double_space: forbidden
+  ellipsis_char: "…"            # U+2026, 점 3개 금지
+  exclamation: shout_or_surprise_only
+  interrobang: allowed               # ?!
+  hashtag_symbol: allowed
+  ampersand_in_initialism: allowed   # R&B, B&B
+  acronym_periods: forbidden         # CD, DVD, DNA
+
+quotes:
+  double: screen_text                # " " 화면 삽입 텍스트·메인 타이틀
+  single: quotation                  # ' ' 인용·강조·작품 제목·소리내어 읽기
+  no_quotes_for: [voiceover_other_time, recalled_voice, scene_description]
+  span_multiple_events: mark_both_ends
+
+continuity:
+  pause_threshold_ms: 2000
+  continued_sentence: no_marker      # 이어지는 문장에는 부호 없음
+  pause_or_trailing: ellipsis
+  mid_sentence_start: leading_ellipsis_no_space
+
+dual_speaker:
+  marker: "- "                       # 하이픈 + 공백 (영어 가이드와 다르다)
+  max_speakers_per_event: 2
+  one_per_line: true
+  self_contained_lines: true
+
+forced_narrative:
+  include_when: plot_pertinent
+  quote_style: double
+  match_onscreen_duration: true
+  merge_with_dialogue: forbidden
+  ellipsis_around_interruption: false
+
+numbers:
+  clock_24h: military_context_only
+  currency_conversion: forbidden
+  measurement: metric_unless_plot_relevant
+
+songs:
+  subtitle_when: [plot_pertinent, rights_granted]
+  opening_ending_theme: only_if_plot_pertinent_or_instructed
+  italics: false
+  quotes: false
+  music_note: false
+  line_end_punctuation: [question_mark, exclamation_mark]
+  background_continues: ellipsis
+
+names:
+  translate: only_if_approved        # KNP 승인 번역이 있을 때만
+  transliteration: korean_guidelines
+  nickname: translate_if_meaningful
+
+titles:
+  main_title: approved_only
+  skip_if_identical_to_onscreen: true
+  split_across_events: forbidden
+  italics: false
+
+formality:
+  decide_by: [context, relationship, era]
+  never_decide_by: [gender_only, age_only]
+
+censorship:
+  allowed: false                     # 검열 금지, 욕설은 동등 강도
+
+font:
+  family_placeholder: Gulim
+  color: white
+
+rules:
+  - id: T01
+    clause: "I.2 Character Limitation"
+    check: line_length_exceeded
+    auto: false
+    message: "한 줄 16자를 넘습니다(라틴·공백·부호는 0.5자)."
+  - id: T02
+    clause: "I.15 Reading Speed Limits"
+    check: reading_speed_exceeded
+    auto: false
+    message: "읽기 속도가 초당 12자(아동물 9자)를 넘습니다."
+  - id: T05
+    clause: "I.13 Punctuation"
+    check: line_end_period_or_comma
+    auto: true
+    message: "줄 끝에는 마침표·쉼표를 쓰지 않습니다."
+  - id: T06
+    clause: "I.4 Continuity"
+    check: three_dot_ellipsis
+    auto: true
+    message: "점 3개가 아니라 U+2026(…) 한 글자를 씁니다."
+  - id: T07
+    clause: "I.10 Italics"
+    check: italics_present
+    auto: true
+    message: "한국어 자막에는 이탤릭을 쓰지 않습니다."
+  - id: T09
+    clause: "I.6 Dual Speakers"
+    check: dual_speaker_marker_format
+    auto: true
+    message: "2인 화자는 하이픈 뒤에 공백을 둡니다."
+  - id: T10
+    clause: "I.14 Quotes"
+    check: quote_role_swapped
+    auto: false
+    message: "화면 텍스트는 큰따옴표, 인용은 작은따옴표입니다."
+  - id: T11
+    clause: "I.8 On-screen Text"
+    check: forced_narrative_merged_with_dialogue
+    auto: false
+    message: "강제 자막과 대사를 같은 자막에 합치지 않습니다."
+  - id: T12
+    clause: "I.12 Numbers"
+    check: [clock_24h, currency_converted, non_metric_unit]
+    auto: false
+    message: "24시간제·통화 환산·비미터법 표기를 확인하세요."
+  - id: T13
+    clause: "I.1 Acronyms"
+    check: acronym_with_periods
+    auto: true
+    message: "영어 약어는 글자 사이 마침표 없이 씁니다."
+  - id: T14
+    clause: "I.16 Repetitions"
+    check: repeated_phrase_translated_twice
+    auto: false
+    message: "같은 자막에서 반복되는 말은 한 번만 번역합니다."
+  - id: T15
+    clause: "I.17 Songs"
+    check: [lyric_line_end_punctuation, lyric_quotes_or_italics]
+    auto: false
+    message: "가사 줄 끝에는 물음표·느낌표만, 따옴표·이탤릭은 쓰지 않습니다."
+  - id: T16
+    clause: "General Requirements / Line Treatment"
+    check: line_break_position
+    auto: false
+    message: "줄바꿈이 문법 단위를 끊거나 역피라미드 형태가 아닙니다."
+  - id: T17
+    clause: "I.19 Treatment"
+    check: formality_inconsistent
+    auto: false
+    message: "같은 관계에서 존댓말·반말이 섞였습니다."

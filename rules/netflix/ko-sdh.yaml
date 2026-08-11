@@ -1,0 +1,161 @@
+schema_version: 1
+platform: netflix
+language: ko
+kind: sdh
+extends: common.yaml
+status: complete
+source:
+  official: true
+  url: "https://partnerhelp.netflixstudios.com/hc/en-us/articles/216001127-Korean-Timed-Text-Style-Guide"
+  section: "Korean Timed Text Style Guide — Section II (Korean SDH)"
+  revision: "2025-07-07"
+  verified: "2026-08-11"
+
+limits:
+  chars_per_line: 16
+  char_weights:
+    cjk: 1.0
+    other: 0.5
+  reading_speed_cps:
+    adult: 14           # 번역 자막(12)보다 빠르다 — 두 프로파일을 절대 섞지 말 것
+    children: 11
+  max_lines: 2
+
+accuracy:
+  paraphrase: forbidden            # 의역 금지
+  simplify: forbidden
+  reduction_strategy: [delete, condense]   # 축약은 삭제·압축으로만
+  preserve: [dialect_lexicon, dialect_word_order, slang]
+  intentional_mispronunciation: keep_if_plot_or_character
+  indistinguishable_phonemes: may_omit    # ㅐ/ㅔ 등
+  dubbed_content: follow_dubbing_script
+
+text:
+  italics: forbidden
+  ellipsis_char: "…"
+
+speaker_id:
+  enclosure: "[]"
+  use_when: not_visually_identifiable
+  skip_when: continuing_identified_dialogue
+  unknown_person: ["[여자]", "[남자]"]
+  numbering: per_scene              # 장면 바뀌면 초기화
+  combined_order: [name, source, manner, language]   # 언어 라벨은 맨 뒤
+  spoilers: forbidden
+  progression_allowed: true         # [경찰] > [김 경위] > [진수]
+  consistency_required: true
+
+sound_effect:
+  enclosure: "[]"
+  style: [single_description, onomatopoeia, onomatopoeia_plus_source]
+  prefer_onomatopoeia: true
+  describe: audio_only              # 시각 요소·동작은 설명하지 않는다
+  omit_speaker_id_when_visible: true
+  plot_pertinent_always: true
+  meaningful_silence: true
+  use_adverbs: true
+  discouraged_endings: ["들린다", "소리"]
+  discouraged_labels: ["[말을 더듬으며]"]
+  hesitation_alternative: "[주저하며]"
+  order: follow_original_audio
+
+dual_speaker:
+  hyphen_when: different_source     # 화자와 효과음의 출처가 다를 때만
+  hyphen_when_self_emitted: false
+  self_contained_lines: true
+
+foreign_dialogue:
+  translated_marker: "[{language}]"          # 예: [중국어]
+  untranslatable_marker: "[{language}로 말한다]"   # 예: [일어로 말한다]
+  native_language_marker: none
+  forbidden_markers: ["[외국어로 말한다]"]
+  accent_marker: "[{name}/{accent}]"          # 예: [영희/북한 억양]
+  gibberish_marker: "[가짜 언어로 말한다]"
+  loanword_in_korean: transliterate_no_marker
+
+music:
+  music_note: "♪"
+  space_between_note_and_text: true
+  wrap_each_line: true
+  duet_wrap_each_sung_line: true
+  title_marker_nondiegetic: "[{artist}의 '{title}']"
+  title_marker_diegetic: "[{artist}의 '{title}'가 흐른다]"
+  ambient_generic: "[{genre} 음악 - {source}]"
+  description: objective_no_spoiler
+  korean_lyrics:
+    nondiegetic: if_plot_pertinent_and_not_interfering
+    diegetic: if_plot_pertinent
+    character_sung: when_possible
+  roman_lyrics_in_korean_song: include_untranslated
+  foreign_song: only_if_translation_provided_or_instructed
+  background_continues: ellipsis
+
+censorship:
+  allowed: false
+  bleeped_word: "*"          # 음절당 1개
+  bleeped_sentence: "****"
+
+readability:
+  count_markers_in_limit: true   # 화자 표시·효과음도 글자 수에 포함
+
+rules:
+  - id: S01
+    clause: "II.2 Character Limitation"
+    check: line_length_exceeded
+    auto: false
+    message: "한 줄 16자를 넘습니다(라틴·공백·부호는 0.5자)."
+  - id: S02
+    clause: "II.3 Reading Speed Limit"
+    check: reading_speed_exceeded
+    auto: false
+    message: "읽기 속도가 초당 14자(아동물 11자)를 넘습니다."
+  - id: S05
+    clause: "II.6 Foreign Dialogue"
+    check: forbidden_foreign_marker
+    auto: false
+    message: "[외국어로 말한다]는 쓸 수 없습니다. 실제 언어를 조사하세요."
+  - id: S06
+    clause: "II.9 Sound Effects"
+    check: discouraged_sound_ending
+    auto: false
+    message: "효과음 어미로 '들린다'·'소리'는 지양합니다."
+  - id: S07
+    clause: "II.9 Sound Effects"
+    check: stutter_label
+    auto: false
+    message: "실제 말더듬이 아니면 [말을 더듬으며] 대신 전사나 [주저하며]를 씁니다."
+  - id: S08
+    clause: "II.7 Songs and Music"
+    check: music_note_spacing
+    auto: true
+    message: "음표와 텍스트 사이에 공백 한 칸이 필요합니다."
+  - id: S09
+    clause: "II.7 Songs and Music"
+    check: music_note_unpaired
+    auto: false
+    message: "가사 줄의 앞뒤 음표 짝이 맞지 않습니다."
+  - id: S10
+    clause: "II.10 Special Instructions"
+    check: bleep_asterisk_count
+    auto: false
+    message: "삐 처리는 음절당 별표 하나입니다(문장 전체는 ****)."
+  - id: S11
+    clause: "II.8 / II.9"
+    check: bracket_unclosed
+    auto: true
+    message: "대괄호가 닫히지 않았습니다."
+  - id: S12
+    clause: "II.5 Dual Speaker/Multiple Events"
+    check: sentence_split_across_events
+    auto: false
+    message: "각 줄은 완결된 문장이어야 합니다."
+  - id: S13
+    clause: "II.8 Speaker IDs"
+    check: speaker_id_inconsistent
+    auto: false
+    message: "같은 인물의 화자 표시가 일관되지 않습니다(전개상 의도적 변경은 예외)."
+  - id: S14
+    clause: "Section I.10 Italics (한국어 공통)"
+    check: italics_present
+    auto: true
+    message: "한국어 자막에는 이탤릭을 쓰지 않습니다."

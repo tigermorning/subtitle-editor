@@ -1,0 +1,27 @@
+schema_version: 1
+platform: coupang
+language: ko
+kind: common
+status: unavailable
+source:
+  official: false
+  url: null
+  section: null
+  revision: null
+  verified: "2026-08-11"
+
+# 쿠팡플레이는 자막 제작 스타일 가이드를 공개하지 않는다(2026-08 기준 공개 문서 없음).
+# 공식 사이트·고객센터에도 제작 규정이 없고 시청자용 자막 설정 안내만 있다.
+#
+# 확보 경로: 쿠팡플레이 콘텐츠 파트너팀 또는 배리어프리 제작 벤더에 직접 요청.
+#
+# 대체 준거(정부 공식 문서 — 플랫폼 규정이 아니므로 프로파일 값으로 쓰지 않는다):
+#   방송통신위원회 「장애인방송 프로그램 제공 가이드라인」
+#     https://kcc.go.kr/user.do?boardId=1099&boardSeq=47390&cp=2&dc=&mode=view&page=A02030700
+#   「장애인방송 편성 및 제공 등 장애인 방송접근권 보장에 관한 고시」
+#     https://www.law.go.kr/LSW/admRulLsInfoP.do?admRulSeq=2100000175818
+#   -> 폐쇄자막 제작 지침에 자막 속기사 최소 자격 / 자막 표기 방법 / 화자 구분 방법이
+#      규정돼 있다. PDF 본문 파싱은 아직 못 했다(rules/sources/SUBTITLE_GUIDE_SDH.md 참고).
+
+limits: {}
+rules: []
