@@ -210,3 +210,8 @@ rules:
     check: music_note_spacing
     auto: true
     message: "음표 앞뒤로 한 칸씩 띄웁니다."
+  - id: DP010
+    clause: "실무 기준 / 자막 위치"
+    check: position_collides_with_forced_narrative
+    auto: true
+    message: "화면 글자와 겹칩니다. 말자막을 상단 중앙으로 올립니다(겹침이 끝나면 되돌립니다)."
