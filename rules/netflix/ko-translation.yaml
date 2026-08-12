@@ -170,7 +170,10 @@ rules:
     clause: "I.19 Treatment"
     check: formality_inconsistent
     auto: false
-    message: "같은 관계에서 존댓말·반말이 섞였습니다."
+    # **캐릭터 시트가 있어야 돈다.** 같은 인물이 존댓말과 반말을 섞는 것은 상대가
+    # 다르면 정상이고, 자막에 상대는 표시되지 않는다. 그래서 "이 인물은 이렇게
+    # 말한다"를 사람이 정해 준 것과 견준다(`--cast`).
+    message: "캐릭터 시트에 정한 말투를 벗어났습니다."
   - id: T18
     clause: "General Requirements / Line Treatment (권고)"
     check: line_break_top_heavy
