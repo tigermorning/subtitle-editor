@@ -78,6 +78,14 @@ forced_narrative:
   korean_title_cards: not_needed
   overlap_with_dialogue: delete_forced_narrative
 
+collision:
+  # 위 `overlap_with_dialogue`와 같은 말이지만, **검사기가 읽는 키는 이쪽이다**
+  # (`checker/position.py`의 `collision.policy`). 두 곳에 적어 두면 갈라지므로
+  # 값을 하나로 맞춰 둔다 — 둘 다 "화면자막을 지운다"이다(2026-08-14).
+  # 공식 프로파일(`common.yaml`)에는 넣지 않는다. 이것은 실무 자료가 정한 값이다.
+  policy: dialogue_only
+  move_to: top_center
+
 shot_change:
   applied: true
   in_point: "장면 전환에 딱 맞추거나 0.5초 이상 벌린다"

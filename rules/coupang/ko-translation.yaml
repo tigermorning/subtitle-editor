@@ -26,9 +26,10 @@ forced_narrative:
   marker: ask                       # double_quote | italic | bracket | none
 
 collision:
-  # [영상번역] 677행 "말자막이 화면자막보다 우선! 둘이 겹치면 말자막 번역"이
-  # 기본이지만, 678행처럼 둘 다 따로 잡으라는 업체도 있다. 그래서 ask로 둔다.
-  policy: ask                       # move_dialogue | dialogue_only | keep_both
+  # **쿠팡만 다르다.** 플랫폼 대조표(WORK-030)가 화면자막을 위에 배치해 **병기**하라고
+  # 값을 준다. [영상번역] 678행이 말하는 "둘 다 따로 잡는" 쪽이 쿠팡의 기본인 셈이다.
+  # 업체가 다르게 요구하면 `--collision`으로 덮는다(2026-08-14 정정, 예전에는 ask).
+  policy: keep_both                 # move_dialogue | dialogue_only | keep_both
   move_to: top_center               # move_dialogue일 때 말자막이 갈 자리
 
 rules:

@@ -26,9 +26,11 @@ forced_narrative:
   marker: ask                       # double_quote | italic | bracket | none
 
 collision:
-  # [영상번역] 677행 "말자막이 화면자막보다 우선! 둘이 겹치면 말자막 번역"이
-  # 기본이지만, 678행처럼 둘 다 따로 잡으라는 업체도 있다. 그래서 ask로 둔다.
-  policy: ask                       # move_dialogue | dialogue_only | keep_both
+  # [영상번역] 677행 "말자막이 화면자막보다 우선! 둘이 겹치면 말자막 번역"이 기본이고,
+  # 플랫폼 대조표(WORK-030)도 **디즈니는 화면자막 삭제**라고 값을 준다.
+  # 678행처럼 둘 다 따로 잡으라는 업체가 있으므로 `--collision`으로 덮을 수 있게 두되,
+  # **기본값을 ask로 두지는 않는다** — 자료에 답이 있는데 묻는 것이었다(2026-08-14 정정).
+  policy: dialogue_only             # move_dialogue | dialogue_only | keep_both
   move_to: top_center               # move_dialogue일 때 말자막이 갈 자리
 
 rules:
