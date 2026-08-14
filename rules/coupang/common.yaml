@@ -209,3 +209,8 @@ rules:
     check: hangul_number_ten_plus
     auto: false
     message: "10 이상은 아라비아 숫자로 적습니다(10 미만은 소리 나는 대로)."
+  - id: CC35
+    clause: "작업자 자료 / [영상번역] 문장부호"
+    check: ellipsis_leading
+    auto: false
+    message: "말줄임표는 후략에만 씁니다(전략·중략 불가)."
